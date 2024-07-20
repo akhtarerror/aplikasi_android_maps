@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "291906961710",
+    "project_id": "signuploginmaps",
+    "storage_bucket": "signuploginmaps.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:291906961710:android:92ff676bdff60efc7ababf",
+        "android_client_info": {
+          "package_name": "com.example.belajarsplash"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD2Mm55CXasPSOjjqKrX04n-IK6-KtvqsY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
