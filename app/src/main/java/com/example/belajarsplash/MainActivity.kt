@@ -2,6 +2,7 @@ package com.example.belajarsplash
 
 import android.Manifest
 import android.content.pm.PackageManager
+import android.location.Geocoder
 import android.os.Bundle
 import android.widget.Button
 import android.widget.TextView
@@ -20,7 +21,7 @@ import com.google.android.gms.maps.MapView
 import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MarkerOptions
-
+import java.util.Locale
 
 class MainActivity : AppCompatActivity(), OnMapReadyCallback {
     private lateinit var fusedLocationClient: FusedLocationProviderClient
@@ -86,8 +87,25 @@ class MainActivity : AppCompatActivity(), OnMapReadyCallback {
                 if (location != null) {
                     val latitude = location.latitude
                     val longitude = location.longitude
-                    // Tampilkan lokasi di TextView
-                    locationText.text = "Latitude: $latitude, Longitude: $longitude"
+
+                    // Gunakan Geocoder untuk mendapatkan detail lokasi
+                    val geocoder = Geocoder(this, Locale.getDefault())
+                    val addresses = geocoder.getFromLocation(latitude, longitude, 1)
+                    val locationDetails = if (addresses != null && addresses.isNotEmpty()) {
+                        val address = addresses[0]
+                        val kelurahan = address.subLocality ?: "N/A"
+                        val kecamatan = address.locality ?: "N/A"
+                        val kota = address.subAdminArea ?: "N/A"
+                        val provinsi = address.adminArea ?: "N/A"
+                        val country = address.countryName ?: "N/A"
+                        "Negara: $country\nProvinsi: $provinsi\nKota: $kota\nKecamatan: $kecamatan\nKelurahan: $kelurahan"
+                    } else {
+                        "Detail lokasi tidak tersedia"
+                    }
+
+                    // Tampilkan detail lokasi dan koordinat di TextView
+                    locationText.text = "$locationDetails\nLatitude: $latitude\nLongitude: $longitude"
+
                     // Tampilkan lokasi di peta
                     val userLocation = LatLng(latitude, longitude)
                     googleMap.addMarker(MarkerOptions().position(userLocation).title("Lokasi Anda"))
